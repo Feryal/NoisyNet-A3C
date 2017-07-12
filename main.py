@@ -27,7 +27,8 @@ parser.add_argument('--lr', type=float, default=0.001, metavar='η', help='Learn
 parser.add_argument('--no-lr-decay', action='store_true', help='Disable linearly decaying learning rate to 0')
 parser.add_argument('--rmsprop-decay', type=float, default=0.99, metavar='α', help='RMSprop decay factor')
 parser.add_argument('--no-noise', action='store_true', help='Disable noisy linear layers')
-parser.add_argument('--entropy-weight', type=float, default=0, metavar='β', help='Entropy regularisation weight')  # 
+parser.add_argument('--noise_entropy', action='store_true', help='Enable noisy linear layers and entropy loss')
+parser.add_argument('--entropy-weight', type=float, default=0.001, metavar='β', help='Entropy regularisation weight')  #
 parser.add_argument('--no-time-normalisation', action='store_true', help='Disable normalising loss by number of time steps')
 parser.add_argument('--max-gradient-norm', type=float, default=40, metavar='VALUE', help='Max value of gradient L2 norm')
 parser.add_argument('--evaluate', action='store_true', help='Evaluate only')
@@ -52,7 +53,7 @@ if __name__ == '__main__':
 
   # Create shared network
   env = gym.make(args.env)
-  shared_model = ActorCritic(env.observation_space, env.action_space, args.hidden_size, args.no_noise)
+  shared_model = ActorCritic(env.observation_space, env.action_space, args.hidden_size, args.no_noise, args.noise_entropy)
   shared_model.share_memory()
   if args.model and os.path.isfile(args.model):
     # Load pretrained weights

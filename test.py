@@ -15,7 +15,7 @@ def test(rank, args, T, shared_model):
   env = gym.make(args.env)
   env.seed(args.seed + rank)
   action_size = env.action_space.n
-  model = ActorCritic(env.observation_space, env.action_space, args.hidden_size, args.no_noise)
+  model = ActorCritic(env.observation_space, env.action_space, args.hidden_size, args.no_noise, args.noise_entropy)
   model.eval()
 
   can_test = True  # Test flag

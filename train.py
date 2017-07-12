@@ -28,7 +28,7 @@ def train(rank, args, T, shared_model, optimiser):
   env = gym.make(args.env)
   env.seed(args.seed + rank)
   action_size = env.action_space.n
-  model = ActorCritic(env.observation_space, env.action_space, args.hidden_size, args.no_noise)
+  model = ActorCritic(env.observation_space, env.action_space, args.hidden_size, args.no_noise, args.noise_entropy)
   model.train()
 
   t = 1  # Thread step counter
@@ -110,7 +110,7 @@ def train(rank, args, T, shared_model, optimiser):
       A_GAE = A_GAE * args.discount * args.trace_decay + td_error
       # dθ ← dθ + ∇θ∙log(π(a_i|s_i; θ))∙Ψ
       policy_loss -= log_probs[i] * Variable(A_GAE)  # Policy gradient loss
-      if args.no_noise:
+      if args.no_noise or args.noise_entropy:
         # dθ ← dθ + β∙∇θH(π(s_i; θ))
         policy_loss -= args.entropy_weight * entropies[i]  # Entropy maximisation loss
 

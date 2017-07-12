@@ -38,9 +38,10 @@ class NoisyLinear(nn.Linear):
 
 
 class ActorCritic(nn.Module):
-  def __init__(self, observation_space, action_space, hidden_size, no_noise):
+  def __init__(self, observation_space, action_space, hidden_size, no_noise, noise_entropy):
     super(ActorCritic, self).__init__()
     self.no_noise = no_noise
+    self.noise_entropy = noise_entropy
     self.state_size = observation_space.shape[0]
     self.action_size = action_space.n
 
