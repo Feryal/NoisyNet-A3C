@@ -6,6 +6,9 @@ NoisyNet [[1]](#references) (LSTM) asynchronous advantage actor-critic (A3C) [[2
 
 Run with `--no-noise` to run normal A3C (without noisy linear layers, but with entropy regularisation). NoisyNet-A3C disables entropy regularisation.
 
+Run with `--noise-entropy` to run NoisyNet with entropy regularisation.
+
+
 Requirements
 ------------
 
